@@ -88,7 +88,7 @@ bbnj_ac <- filter(bbnj, double != 1)
 bbnj_ac <- filter(bbnj_ac, negotiation_format %in% c("plenary", "working group"))
 
 # Further filter rows where 'type_obs' equals 1
-bbnj_ac <- filter(bbnj_ac, type_obs == 1)
+#bbnj_ac <- filter(bbnj_ac, type_obs == 1)
 
 # Count the number of observations per actor (e.g., country)
 countries_fa <- bbnj_ac %>%
@@ -113,6 +113,11 @@ countries_fa$actor[countries_fa$actor == "bahamas"] <- 'the bahamas'
 countries_fa$actor[countries_fa$actor == "tanzania"] <- 'united republic of tanzania'
 countries_fa$actor[countries_fa$actor == "republic of korea"] <- 'south korea'
 countries_fa$actor[countries_fa$actor == "cabo verde"] <- 'cape verde'
+countries_fa$actor[countries_fa$actor == "syrian arabic republic"] <- 'syria'
+countries_fa$actor[countries_fa$actor == "papua neu guinea"] <- 'papua new guinea'
+countries_fa$actor[countries_fa$actor == "timor-leste"] <- 'east timor'
+countries_fa$actor[countries_fa$actor == "tunesia"] <- 'tunisia'
+#Cook Islands and Palestine are listed under other sovereign states in the "world" data set
 
 # Filter for countries that are in the world map dataset or represent the EU
 countries_fa <- countries_fa %>% filter(actor %in% countries_list | actor == "eu")
@@ -144,7 +149,8 @@ ggplot() +
   scale_fill_viridis_c(
     option = "plasma", 
     trans = "sqrt",  # Apply a square root transformation to the fill scale
-    name = "Number of \nInterventions"  # Custom legend title
+    name = "Number of \nInterventions",  # Custom legend title
+    breaks = c(25, 50, 75, 100, 125),  # Specify the breakpoints for the scale
   ) +
   theme_minimal() +  # Use a minimal theme for clean visualization
   theme(
